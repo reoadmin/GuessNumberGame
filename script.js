@@ -20,13 +20,19 @@ function checkGuess() {
         setMessage(`Congratulations! You guessed the number ${randomNumber} correctly in ${attempts} attempts!`, 'green');
         document.getElementById('guessInput').setAttribute('disabled', 'true');
         showCharacter("happy");
+        playSound('correctSound');
     } else if (guess < randomNumber) {
         setMessage('Too low! Try again.', 'orange');
         showCharacter("sad");
+        playSound('wrongSound');
     } else {
         setMessage('Too high! Try again.', 'orange');
         showCharacter("angry");
+        playSound('wrongSound');
     }
+
+    // Clear the input field
+    document.getElementById('guessInput').value = '';
 }
 
 function setMessage(message, color) {
@@ -48,4 +54,10 @@ function showCharacter(emotion) {
             characterElement.innerHTML = '<circle cx="50" cy="50" r="45" fill="yellow"/><circle cx="35" cy="40" r="5" fill="black"/><circle cx="65" cy="40" r="5" fill="black"/><path d="M30 60 Q50 20 70 60" fill="none" stroke="black" stroke-width="3"/><path d="M30 60 Q50 40 70 60" fill="none" stroke="black" stroke-width="3"/>';
             break;
     }
+}
+
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
 }
